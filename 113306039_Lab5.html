@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>113306039_Lab5</title>
+		<link rel="stylesheet" type="text/css" href="113306039_Lab5.css">
+
+</head>
+<body>
+	<input type = "number" id = "mathGrade" placeholder = "Math Grade">
+	<input type = "number" id = "englishGrade" placeholder = "English Grade">
+	<button id="submitBtn">Submit</button>
+	<table>
+		<thead>
+			<tr>
+				<th id = "heading">#</th>
+				<th>Math</th>
+				<th>English</th>
+				<th>Average</th>
+			</tr>
+		</thead>
+		<tbody id = "gradesTable"></tbody>
+		<tfoot>
+			<tr>
+			<td id = "Average">Average</td>
+			<td id = "mathAvg"></td>
+			<td id = "englishAvg"></td>
+			<td id = "overallAvg"></td>
+			</tr>
+	</tfoot>
+	</table>
+</body>
+<script>
+	const mathInput = document.getElementById('mathGrade');
+        const englishInput = document.getElementById('englishGrade');
+        const submitBtn = document.getElementById('submitBtn');
+        const gradesTable = document.getElementById('gradesTable');
+        const mathAvgCell = document.getElementById('mathAvg');
+        const englishAvgCell = document.getElementById('englishAvg');
+        const overallAvgCell = document.getElementById('overallAvg');
+
+        let mathScores = [];
+        let englishScores = [];
+        let rowCount = 1;
+
+        submitBtn.addEventListener('click', () => {
+            const math = parseFloat(mathInput.value);
+            const english = parseFloat(englishInput.value);
+
+            if (isNaN(math) || isNaN(english)) return;
+
+            const average = ((math + english) / 2).toFixed(2);
+
+            mathScores.push(math);
+            englishScores.push(english);
+
+            const row = `<tr><td>${rowCount}</td><td>${math}</td><td>${english}</td><td>${average}</td></tr>`;
+            gradesTable.insertAdjacentHTML('beforeend', row);
+            rowCount ++;
+
+            mathAvgCell.textContent = (mathScores.reduce((a, b) => a + b, 0) / mathScores.length).toFixed(2);
+            englishAvgCell.textContent = (englishScores.reduce((a, b) => a + b, 0) / englishScores.length).toFixed(2);
+            overallAvgCell.textContent = ((mathScores.concat(englishScores).reduce((a, b) => a + b, 0)) / (mathScores.length + englishScores.length)).toFixed(2);
+        });
+</script>
+</html>
